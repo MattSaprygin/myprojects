@@ -1,0 +1,28 @@
+#include <stdio.h>
+int s (int n, int M[n][n], int visited[n][n], int row, int col, int current_sum){
+    int min_sum=0;
+    int move_r[4]={-1,0,1,0};
+    int move_c[4]={0,-1,0,1};
+    int i, j;
+    if (row==n && col==n) {
+        if (current_sum<min_sum) min_sum=current_sum;  
+    }
+    
+     //сейчас мы стоим на клетке с номером row, col
+    
+    for (i=0;i<4;i++){
+        row=row+move_r[i];
+        col=col+move_c[i];
+        if (row<=n && col<=n && visited[row][col]==0){
+            current_sum=current_sum+M[row][col];
+            visited[row][col]=1;
+            s(n,M,visited, row,col,current_sum);
+        }
+        row=row+move_r[i];
+        col=col+move_c[i];
+        if (row<=n && col<=n && visited[row][col]==1){
+            visited[row][col]=0;//очищаем visited
+    }
+    return min_sum;
+
+}
